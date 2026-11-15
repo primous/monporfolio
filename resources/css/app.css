@@ -1,0 +1,168 @@
+@import "tailwindcss";
+/* Polices du site (auto-hébergées) : Geist Sans (principale) et Geist Mono (labels, chiffres, badges). */
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@source "../views";
+
+@theme {
+  --color-*: initial; /* vide la palette par défaut : seules les couleurs de la charte existent */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-ink: #000000;
+  --color-ink-soft: #111111;
+  /* Rouge du logo (phénix). Ancien violet : #7f00ff / #6a00d9. */
+  --color-primary: #e00c00;
+  --color-primary-hover: #b30a00;
+  /* Rose des barres du logo : réservé au motif « barres » (ui/diamond). */
+  --color-primary-soft: #ff8890;
+  --color-surface: #f5f5f5;
+  --color-line: #e5e5e0;
+  --color-muted: #6b6b6b;
+
+  /* Geist Sans : police principale (titres, textes, boutons, interface). */
+  --font-heading: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
+  /* Geist Mono : police secondaire (petits labels, chiffres, badges, éléments façon stats). */
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-card: 1.5rem; /* 24px */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  --shadow-float: 0 12px 40px rgb(0 0 0 / 0.12);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-weight: 400; line-height: 1.6; color: var(--color-ink); background: #fff; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: var(--font-heading); letter-spacing: -0.025em; line-height: 1.1; font-weight: 700; color: var(--color-ink); text-wrap: balance; }
+  /* Ancres : le titre de section ne passe pas sous le header collant (72 px). */
+  section[id] { scroll-margin-top: 72px; }
+  h1 { font-weight: 800; }
+  h3 { font-weight: 600; }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  [x-cloak] { display: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+
+@layer components {
+  /*
+   * Masquage UNIQUEMENT sous html.reveal-ready (ajoutée par un script inline du layout) :
+   * sans JavaScript, tout reste visible. L'IntersectionObserver de app.js ajoute .is-visible.
+   */
+  .reveal-ready .reveal { opacity: 0; transform: translateY(20px);
+    transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 100ms); }
+
+  /* Variante collage / images : scale 0.95 → 1, 800 ms, délai 400 ms (+ échelonnement --i) */
+  .reveal-ready .reveal-scale { opacity: 0; transform: scale(0.95);
+    transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+    transition-delay: calc(400ms + var(--i, 0) * 100ms); }
+
+  .reveal-ready .reveal.is-visible,
+  .reveal-ready .reveal-scale.is-visible { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready .reveal, .reveal-ready .reveal-scale { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------- Signature visuelle ---------- */
+
+  /* Titres « affiche » : Inter 800, casse normale, très serrés (effet éditorial). */
+  .display {
+    font-family: var(--font-heading); font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1;
+  }
+
+  /* Variante du marqueur pour fond noir : trait violet plein sous le mot-clé. */
+  .marker-strong {
+    background-image: linear-gradient(var(--color-primary), var(--color-primary));
+    background-repeat: no-repeat; background-position: 0 92%; background-size: 100% 0.12em;
+  }
+  .reveal-ready .reveal .marker-strong { background-size: 0 0.12em; transition: background-size .9s var(--ease-out) .5s; }
+  .reveal-ready .reveal.is-visible .marker-strong { background-size: 100% 0.12em; }
+
+  /* Défilement horizontal sans barre visible (carrousel des projets). */
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Grille fine (#E5E5E0) fondue vers les bords : fond éditorial du hero. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  }
+
+  /* Surlignage « marqueur » violet sous un mot-clé ; il se trace quand le bloc apparaît. */
+  .marker {
+    background-image: linear-gradient(color-mix(in oklab, var(--color-primary) 22%, transparent), color-mix(in oklab, var(--color-primary) 22%, transparent));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 0.28em;
+    padding-inline: 0.04em;
+  }
+  .reveal-ready .reveal .marker { background-size: 0 0.28em; transition: background-size .9s var(--ease-out) .5s; }
+  .reveal-ready .reveal.is-visible .marker { background-size: 100% 0.28em; }
+
+  /*
+   * Hero « la conversation devient une page ».
+   * État final par défaut (sans JS / reduced-motion) : bulles visibles, carte du site au premier plan.
+   * Avec JS : les bulles arrivent une à une, puis la carte du site passe devant. Joué une seule fois.
+   */
+  .convo .chat-card { transform: translate(-6%, 4%) rotate(-3deg) scale(.94); }
+  .reveal-ready .convo .bubble,
+  .reveal-ready .convo .site-card { opacity: 0; }
+  .reveal-ready .convo .chat-card { transform: none; }
+  .reveal-ready .convo.is-visible .bubble { animation: bubble-in .45s var(--ease-out) both; animation-delay: calc(300ms + var(--b, 0) * 380ms); }
+  .reveal-ready .convo.is-visible .chat-card { animation: chat-back .8s var(--ease-out) 2.9s both; }
+  .reveal-ready .convo.is-visible .site-card { animation: card-in .8s var(--ease-out) 3s both; }
+
+  @keyframes bubble-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+  @keyframes chat-back { from { transform: none; } to { transform: translate(-6%, 4%) rotate(-3deg) scale(.94); } }
+  @keyframes card-in { from { opacity: 0; transform: translateY(24px) scale(.97); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready .convo .bubble, .reveal-ready .convo .site-card { opacity: 1; animation: none; }
+    .reveal-ready .convo .chat-card { animation: none; transform: translate(-6%, 4%) rotate(-3deg) scale(.94); }
+  }
+
+  /* Halo qui suit le pointeur sur les cartes (état de survol, violet léger). */
+  .spotlight { position: relative; isolation: isolate; }
+  .spotlight::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--color-primary) 7%, transparent), transparent 70%);
+    opacity: 0; transition: opacity .3s var(--ease-out);
+  }
+  .spotlight:hover::before { opacity: 1; }
+
+  /* Grands numéros en contour : gris, puis violets quand l'étape apparaît. */
+  .num-outline {
+    /* Geist Sans (et non Mono) : le zéro barré de Geist Mono se lirait « Ø1 » en grand. */
+    font-family: var(--font-heading); font-weight: 800; line-height: 1; letter-spacing: -0.04em;
+    color: transparent; -webkit-text-stroke: 1.5px var(--color-line);
+    transition: -webkit-text-stroke-color .6s var(--ease-out) .3s;
+  }
+  .is-visible .num-outline, html:not(.reveal-ready) .num-outline { -webkit-text-stroke-color: var(--color-primary); }
+
+  /* Contenu des articles du blog (HTML de l'éditeur de l'admin) : lecture confortable. */
+  .prose-article { font-size: 1.0625rem; line-height: 1.8; color: var(--color-ink); }
+  .prose-article > * + * { margin-top: 1.25em; }
+  .prose-article h2 { font-size: 1.75rem; letter-spacing: -0.03em; margin-top: 2em; }
+  .prose-article h3 { font-size: 1.35rem; letter-spacing: -0.02em; margin-top: 1.75em; }
+  .prose-article h2 + *, .prose-article h3 + * { margin-top: 0.75em; }
+  .prose-article p, .prose-article li { color: #333333; }
+  .prose-article a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-primary); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .prose-article a:hover { color: var(--color-primary); }
+  .prose-article strong { font-weight: 600; color: var(--color-ink); }
+  .prose-article ul, .prose-article ol { padding-left: 1.4em; }
+  .prose-article ul { list-style: disc; }
+  .prose-article ol { list-style: decimal; }
+  .prose-article li + li { margin-top: 0.4em; }
+  .prose-article li::marker { color: var(--color-primary); }
+  .prose-article blockquote { border-left: 2px solid var(--color-primary); padding-left: 1.25em; font-weight: 500; color: var(--color-ink); }
+  .prose-article img { border-radius: 18px; border: 1px solid var(--color-line); }
+}

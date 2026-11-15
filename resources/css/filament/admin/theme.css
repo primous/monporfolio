@@ -1,0 +1,80 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '@fontsource-variable/geist';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/*
+ * Thème admin aligné sur la charte 70 / 20 / 10.
+ * Le violet (primary) reste réservé aux actions principales et aux états actifs :
+ * il est fourni par ->colors() dans AdminPanelProvider, rien n'est forcé ici.
+ */
+
+@layer components {
+  /* Fond de page #F5F5F5, texte noir */
+  .fi-body {
+    background-color: #f5f5f5;
+    color: #000000;
+  }
+
+  /* Titres : resserrés comme sur le front */
+  .fi-header-heading,
+  .fi-section-header-heading,
+  .fi-modal-heading,
+  .fi-simple-header-heading {
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  /* Cartes / sections / tableaux / widgets : radius 20px, bordure #E5E5E0 */
+  .fi-section:not(.fi-section-not-contained),
+  .fi-ta-ctn,
+  .fi-wi-stats-overview-stat,
+  .fi-simple-main,
+  .fi-modal-window {
+    border-radius: 20px;
+    --tw-ring-color: #e5e5e0;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  }
+
+  /* Champs : radius 12px, bordure #E5E5E0 */
+  .fi-input-wrp {
+    border-radius: 12px;
+    --tw-ring-color: #e5e5e0;
+  }
+
+  /* Boutons en pill, comme le front */
+  .fi-btn {
+    border-radius: 9999px;
+  }
+
+  /* Barre du haut et sidebar : blanc + bordure de charte */
+  .fi-topbar > nav,
+  .fi-sidebar-header {
+    background-color: #ffffff;
+    --tw-ring-color: #e5e5e0;
+  }
+  .fi-sidebar {
+    background-color: #ffffff;
+    border-inline-end: 1px solid #e5e5e0;
+  }
+
+  /* Focus clavier : outline rouge (primary) 2px, offset 2px */
+  :focus-visible {
+    outline: 2px solid var(--primary-600);
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * Bouton primaire plein (hors @layer : doit primer sur les utilitaires fi-bg-color-* de Filament).
+ * Filament choisit sinon "texte foncé sur shade 400" (lilas, hors charte).
+ * On impose blanc sur #e00c00 (primary-600), hover #b30a00 (primary-700). Contraste ~5:1.
+ */
+.fi-btn.fi-color.fi-color-primary:not(.fi-outlined) {
+  background-color: var(--primary-600);
+  color: #ffffff;
+
+  &:hover { background-color: var(--primary-700); }
+  & .fi-icon { color: #ffffff; }
+}
