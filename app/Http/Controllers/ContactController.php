@@ -2,31 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactRequest;
 use App\Models\ContactMessage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
+/** Ancien formulaire de contact (conservé). Validation : StoreContactRequest. */
 class ContactController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function store(StoreContactRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
-            'email' => ['required', 'email', 'max:190'],
-            'message' => ['required', 'string', 'min:10', 'max:5000'],
-        ], [
-            'required' => 'Le champ :attribute est obligatoire.',
-            'email' => 'Saisissez une adresse e-mail valide.',
-            'max' => 'Le champ :attribute est trop long.',
-            'message.min' => 'Décrivez votre projet en quelques mots (10 caractères minimum).',
-        ], [
-            'name' => 'nom',
-            'email' => 'e-mail',
-            'message' => 'projet',
-        ]);
+        $retour = route('home').'#contact';
 
-        ContactMessage::create($data);
+        // Piège à robots rempli : on feint le succès sans rien enregistrer.
+        if ($request->estUnRobot()) {
+            return redirect()->to($retour)->with('contact_sent', true);
+        }
 
-        return redirect()->to(route('home').'#contact')->with('contact_sent', true);
+        ContactMessage::create($request->validated());
+
+        return redirect()->to($retour)->with('contact_sent', true);
     }
 }

@@ -2,31 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSuggestionRequest;
 use App\Models\Suggestion;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * Suggestion anonyme (pied de page) : aucun nom, aucune coordonnée, aucune adresse IP enregistrée.
- * Réponse JSON : 201 si enregistrée, 422 si invalide. Champ « website » = piège à robots.
+ * Réponse JSON : 201 si enregistrée, 422 si invalide. Validation : StoreSuggestionRequest.
  */
 class SuggestionController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(StoreSuggestionRequest $request): JsonResponse
     {
         // Piège à robots rempli : on feint le succès sans rien enregistrer.
-        if ($request->filled('website')) {
+        if ($request->estUnRobot()) {
             return response()->json(['ok' => true], 201);
         }
 
-        $data = $request->validate([
-            'message' => ['required', 'string', 'min:5', 'max:2000'],
-            'page' => ['nullable', 'string', 'max:255'],
-        ], [
-            'message.required' => 'Écrivez votre suggestion en quelques mots.',
-            'message.min' => 'Écrivez votre suggestion en quelques mots.',
-            'message.max' => 'Votre suggestion ne peut pas dépasser 2000 caractères.',
-        ]);
+        $data = $request->validated();
 
         Suggestion::create([
             'message' => trim($data['message']),
