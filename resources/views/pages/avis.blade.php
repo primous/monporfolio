@@ -70,7 +70,7 @@
             <div class="md:col-span-2">
               <label class="flex items-start gap-3 text-sm text-ink">
                 <input type="checkbox" name="accord" value="1" @checked(old('accord')) class="mt-0.5 size-4 shrink-0 accent-primary" @error('accord') aria-invalid="true" @enderror>
-                <span>J’accepte que cet avis soit publié sur ce site, avec mon nom et mon activité.</span>
+                <span>J’accepte que cet avis soit publié sur ce site, avec mon nom et mon activité (voir la <a href="{{ route('politique-confidentialite') }}" target="_blank" rel="noopener" class="font-medium text-ink underline decoration-primary underline-offset-2 hover:text-primary">politique de confidentialité</a>).</span>
               </label>
               @error('accord')
                 <p class="mt-2 flex items-center gap-2 text-sm font-medium text-ink" role="alert">

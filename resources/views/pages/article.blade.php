@@ -115,7 +115,7 @@
           </div>
         @else
           <h3 class="display text-xl md:text-2xl">Laisser un commentaire</h3>
-          <p class="mt-2 text-sm text-muted">Votre prénom et votre message suffisent. Les commentaires sont publiés après relecture.</p>
+          <p class="mt-2 text-sm text-muted">Votre prénom et votre message suffisent. Les commentaires sont publiés après relecture (voir la <a href="{{ route('politique-confidentialite') }}" target="_blank" rel="noopener" class="font-medium text-ink underline decoration-primary underline-offset-2 hover:text-primary">politique de confidentialité</a>).</p>
 
           <form method="POST" action="{{ route('blog.commentaire', $article->slug) }}#commentaires" class="mt-6 grid gap-5" novalidate>
             @csrf

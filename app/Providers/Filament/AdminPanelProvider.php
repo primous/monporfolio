@@ -30,6 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
+            // « Mon profil » (menu utilisateur, en haut à droite) : nom et mot de passe.
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
             ->brandName(config('site.name'))
             ->brandLogo(asset('images/brand/logo.png'))
             ->brandLogoHeight('2.5rem')

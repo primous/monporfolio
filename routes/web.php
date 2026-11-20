@@ -24,6 +24,10 @@ Route::post('/blog/{slug}/commentaires', [CommentaireController::class, 'store']
     ->name('blog.commentaire')
     ->middleware('throttle:5,10');
 
+// Pages légales (pied de page).
+Route::view('/mentions-legales', 'pages.mentions-legales')->name('mentions-legales');
+Route::view('/politique-confidentialite', 'pages.politique-confidentialite')->name('politique-confidentialite');
+
 // Suggestion anonyme (pied de page) : JSON, 201 si enregistrée.
 Route::post('/suggestion', [SuggestionController::class, 'store'])
     ->name('suggestion.store')

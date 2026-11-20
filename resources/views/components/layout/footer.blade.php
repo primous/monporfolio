@@ -133,7 +133,7 @@ $link = 'rounded text-white/70 transition duration-200 hover:text-white';
       <div x-show="!sent">
         <p class="font-mono text-xs font-medium uppercase tracking-[0.06em] text-muted">Suggestion anonyme</p>
         <h2 id="suggestion-titre" class="display mt-3 pr-10 text-2xl md:text-[28px]">Une idée pour améliorer ce site&nbsp;?</h2>
-        <p class="mt-3 text-sm text-muted">Je ne demande ni nom ni e-mail, et je n’enregistre pas votre adresse IP. Seul votre message me parvient.</p>
+        <p class="mt-3 text-sm text-muted">Je ne demande ni nom ni e-mail, et je n’enregistre pas votre adresse IP. Seul votre message me parvient (voir la <a href="{{ route('politique-confidentialite') }}" target="_blank" rel="noopener" class="font-medium text-ink underline decoration-primary underline-offset-2 hover:text-primary">politique de confidentialité</a>).</p>
 
         <form class="mt-6" @submit.prevent="send()" novalidate>
           <label for="suggestion-message" class="sr-only">Votre suggestion</label>

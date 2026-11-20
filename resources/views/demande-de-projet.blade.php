@@ -852,7 +852,7 @@
                                         class="size-4 mt-0.5 accent-primary rounded" 
                                     />
                                     <span class="font-body text-xs text-muted leading-snug">
-                                        J’accepte que mes informations soient utilisées pour répondre à ma demande. Voir la politique de confidentialité.
+                                        J’accepte que mes informations soient utilisées pour répondre à ma demande. Voir la <a href="{{ route('politique-confidentialite') }}" target="_blank" rel="noopener" class="font-medium text-ink underline decoration-primary underline-offset-2 hover:text-primary">politique de confidentialité</a>.
                                     </span>
                                 </label>
                                 <p x-show="errors.consent" class="flex items-center gap-1.5 font-body text-xs text-ink font-medium"><svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.5a.75.75 0 00-1.5 0v4a.75.75 0 001.5 0v-4zM10 14.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg><span x-text="errors.consent"></span></p>

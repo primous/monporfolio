@@ -20,6 +20,22 @@ return [
 
     'admin_email' => env('SITE_ADMIN_EMAIL', ''),
 
+    // Informations légales (pages Mentions légales / Politique de confidentialité).
+    // Une ligne vide n'est pas affichée : renseignez-les dans .env dès que vous les avez.
+    'legal' => [
+        'statut' => env('SITE_STATUT'),          // ex. Entreprise individuelle
+        'ifu' => env('SITE_IFU'),                // numéro IFU (Bénin)
+        'rccm' => env('SITE_RCCM'),              // numéro RCCM, si immatriculé
+        'adresse' => env('SITE_ADRESSE'),        // adresse postale, ex. Cotonou, Bénin
+        'mise_a_jour' => '20 novembre 2026',     // date de dernière mise à jour des deux pages
+        // Hébergeur du site
+        'hebergeur' => [
+            'nom' => 'Hostinger International Ltd.',
+            'adresse' => '61 Lordou Vironos Street, 6023 Larnaca, Chypre',
+            'site' => 'https://www.hostinger.com',
+        ],
+    ],
+
     // Route du formulaire « demande de projet » (cible de tous les CTA de l'accueil).
     'form_route' => 'demande-de-projet',
 
