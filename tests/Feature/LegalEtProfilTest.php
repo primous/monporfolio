@@ -59,14 +59,14 @@ class LegalEtProfilTest extends TestCase
 
         Livewire::test(EditProfile::class)
             ->fillForm([
-                'password' => 'NouveauMotDePasse2',
-                'passwordConfirmation' => 'NouveauMotDePasse2',
+                'password' => 'Nouveau-MotDePasse-2!',
+                'passwordConfirmation' => 'Nouveau-MotDePasse-2!',
                 'currentPassword' => 'AncienMotDePasse1',
             ])
             ->call('save')
             ->assertHasNoFormErrors();
 
-        $this->assertTrue(Hash::check('NouveauMotDePasse2', $user->fresh()->password));
+        $this->assertTrue(Hash::check('Nouveau-MotDePasse-2!', $user->fresh()->password));
         $this->assertSame('admin@example.com', $user->fresh()->email);
     }
 }
