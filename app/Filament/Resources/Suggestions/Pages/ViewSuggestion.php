@@ -13,8 +13,10 @@ class ViewSuggestion extends ViewRecord
     {
         parent::mount($record);
 
-        if (blank($this->record->lu_at)) {
-            $this->record->update(['lu_at' => now()]);
+        $suggestion = $this->getRecord();
+
+        if ($suggestion instanceof \App\Models\Suggestion && blank($suggestion->lu_at)) {
+            $suggestion->update(['lu_at' => now()]);
         }
     }
 

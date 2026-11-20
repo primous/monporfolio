@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property array<int, string>|null $difficulties  liste des difficultés cochées (JSON en base)
+ */
 class Demande extends Model
 {
     use HasFactory;
@@ -19,7 +22,7 @@ class Demande extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'activity',
