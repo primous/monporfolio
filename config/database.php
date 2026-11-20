@@ -46,6 +46,8 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            // Sauvegardes : dossier de mysqldump si absent du PATH (en local XAMPP : C:/xampp/mysql/bin).
+            'dump' => array_filter(['dump_binary_path' => env('DB_DUMP_PATH')]),
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
