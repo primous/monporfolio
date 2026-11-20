@@ -30,6 +30,11 @@ class ArticleBlogForm
                     ->toolbarButtons([['bold', 'italic', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'blockquote'], ['undo', 'redo']]),
             ]),
             Section::make('Publication')->columnSpanFull()->columns(2)->schema([
+                Select::make('categorie_blog_id')->label('Catégorie')->columnSpanFull()
+                    ->relationship('categorie', 'nom')->searchable()->preload()
+                    ->createOptionForm([
+                        TextInput::make('nom')->label('Nouvelle catégorie')->required()->maxLength(60),
+                    ]),
                 Select::make('statut')->label('Statut')->options(ArticleBlog::STATUTS)->default('Brouillon')->required(),
                 DateTimePicker::make('date_publication')->label('Date de publication')
                     ->helperText('Laissez vide : la date du jour est utilisée à la publication.'),

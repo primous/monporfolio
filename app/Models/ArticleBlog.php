@@ -4,19 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ArticleBlog extends Model
 {
     protected $table = 'articles_blog';
 
-    protected $fillable = ['titre', 'slug', 'extrait', 'contenu', 'statut', 'date_publication'];
+    protected $fillable = ['categorie_blog_id', 'titre', 'slug', 'extrait', 'contenu', 'statut', 'date_publication'];
 
     public const STATUTS = ['Brouillon' => 'Brouillon', 'Publié' => 'Publié', 'Retiré' => 'Retiré'];
 
     protected function casts(): array
     {
-        return ['date_publication' => 'datetime'];
+        return ['date_publication' => 'datetime', 'vues' => 'integer'];
+    }
+
+    public function categorie(): BelongsTo
+    {
+        return $this->belongsTo(CategorieBlog::class, 'categorie_blog_id');
+    }
+
+    public function commentaires(): HasMany
+    {
+        return $this->hasMany(CommentaireBlog::class, 'article_blog_id');
+    }
+
+    public function commentairesPublies(): HasMany
+    {
+        return $this->commentaires()->where('statut', 'Publié')->oldest();
+    }
+
+    /** +1 lecture, sans toucher à updated_at (la date de modification reste celle de l'auteur). */
+    public function compterUneVue(): void
+    {
+        DB::table($this->getTable())->where('id', $this->getKey())->increment('vues');
+        $this->vues = (int) $this->vues + 1;
     }
 
     protected static function booted(): void

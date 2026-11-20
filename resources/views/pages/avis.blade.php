@@ -35,11 +35,61 @@
     @else
       <x-ui.empty-state class="reveal"
         title="Les avis de mes clients seront publiés ici."
-        text="Uniquement de vrais retours, avec l’accord de chaque client. En attendant, voyez ce que j’ai déjà construit."
+        text="Uniquement de vrais retours, avec l’accord de chaque client. Vous avez travaillé avec moi ? Votre avis peut être le premier."
       >
-        <x-ui.button variant="ghost" :href="route('projets')" :icon="false">Voir les projets</x-ui.button>
+        <x-ui.button href="#laisser-un-avis" :icon="false">Laisser un avis</x-ui.button>
       </x-ui.empty-state>
     @endif
+  </x-layout.section>
+
+  {{-- Déposer un avis (publié après relecture dans l'admin) --}}
+  <x-layout.section bg="surface" id="laisser-un-avis">
+    <div class="mx-auto grid max-w-[1000px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div class="reveal" style="--i:0">
+        <x-ui.section-heading align="left" display badge="Votre avis" title="Vous avez travaillé avec moi&nbsp;?" subtitle="Racontez simplement ce que votre site a changé pour vous, ce qui vous a plu, et ce qui pourrait être amélioré. Votre avis est publié après relecture." />
+      </div>
+
+      <div class="reveal rounded-[24px] border border-line bg-white p-6 shadow-card md:p-8" style="--i:1">
+        @if (session('avis_envoye'))
+          <div class="flex items-start gap-3 py-2" role="status">
+            <span class="grid size-10 shrink-0 place-items-center rounded-full bg-primary/10 text-primary" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+            </span>
+            <div>
+              <p class="font-heading text-lg font-bold text-ink">Merci, votre avis est bien arrivé.</p>
+              <p class="mt-1 text-sm text-muted">Il sera publié sur cette page après relecture.</p>
+            </div>
+          </div>
+        @else
+          <form method="POST" action="{{ route('avis.store') }}#laisser-un-avis" class="grid gap-5 md:grid-cols-2" novalidate>
+            @csrf
+            <x-ui.field label="Prénom ou nom" name="nom" autocomplete="name" maxlength="80" required />
+            <x-ui.field label="Activité, ville (facultatif)" name="activite" maxlength="120" placeholder="Ex. Boutique de cosmétiques, Cotonou" />
+            <x-ui.field label="Votre avis" name="contenu" textarea maxlength="1500" required class="md:col-span-2" placeholder="Votre expérience, ce que le site a changé pour votre activité…" />
+
+            <div class="md:col-span-2">
+              <label class="flex items-start gap-3 text-sm text-ink">
+                <input type="checkbox" name="accord" value="1" @checked(old('accord')) class="mt-0.5 size-4 shrink-0 accent-primary" @error('accord') aria-invalid="true" @enderror>
+                <span>J’accepte que cet avis soit publié sur ce site, avec mon nom et mon activité.</span>
+              </label>
+              @error('accord')
+                <p class="mt-2 flex items-center gap-2 text-sm font-medium text-ink" role="alert">
+                  <svg viewBox="0 0 20 20" class="size-4 shrink-0 text-primary" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.5a.75.75 0 00-1.5 0v4a.75.75 0 001.5 0v-4zM10 14.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+                  {{ $message }}
+                </p>
+              @enderror
+            </div>
+
+            {{-- Piège à robots (invisible) --}}
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute -left-[9999px] h-0 w-0 opacity-0">
+
+            <div class="md:col-span-2">
+              <x-ui.button type="submit">Envoyer mon avis</x-ui.button>
+            </div>
+          </form>
+        @endif
+      </div>
+    </div>
   </x-layout.section>
 
   <x-sections.cta />

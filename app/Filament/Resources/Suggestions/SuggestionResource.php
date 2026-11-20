@@ -28,7 +28,7 @@ class SuggestionResource extends Resource
 
     protected static ?string $pluralModelLabel = 'suggestions';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Schema $schema): Schema
     {

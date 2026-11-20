@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AvisController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PageController;
@@ -13,8 +15,14 @@ Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/projets', [PageController::class, 'projets'])->name('projets');
 Route::get('/parcours', [PageController::class, 'parcours'])->name('parcours');
 Route::get('/avis', [PageController::class, 'avis'])->name('avis');
+Route::post('/avis', [AvisController::class, 'store'])
+    ->name('avis.store')
+    ->middleware('throttle:5,10');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug}', [PageController::class, 'article'])->name('blog.article');
+Route::post('/blog/{slug}/commentaires', [CommentaireController::class, 'store'])
+    ->name('blog.commentaire')
+    ->middleware('throttle:5,10');
 
 // Suggestion anonyme (pied de page) : JSON, 201 si enregistrée.
 Route::post('/suggestion', [SuggestionController::class, 'store'])
