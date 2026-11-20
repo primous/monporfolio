@@ -32,7 +32,7 @@ class ProjetForm
             Section::make('Visuel')->columnSpanFull()->schema([
                 FileUpload::make('visuel')->label('Capture du site')
                     ->disk('site')->directory('projets')->visibility('public')
-                    ->image()->maxSize(4096)->imagePreviewHeight('220')
+                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(4096)->imagePreviewHeight('220')
                     ->helperText('Capture d’écran de la page d’accueil du projet (JPG, PNG ou WebP, 4 Mo max).'),
             ]),
             Section::make('Affichage')->columnSpanFull()->columns(2)->schema([

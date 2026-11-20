@@ -73,9 +73,10 @@
   </x-layout.page-hero>
 
   <x-layout.section bg="white">
-    {{-- Contenu saisi dans l'admin (éditeur Filament), réservé à l'administrateur --}}
+    {{-- Contenu saisi dans l'admin (éditeur Filament), nettoyé à l'affichage :
+         aucun script, attribut on* ni lien javascript: même si un compte admin était compromis --}}
     <article class="prose-article mx-auto max-w-[720px]">
-      {!! $article->contenu !!}
+      {!! \Illuminate\Support\Str::sanitizeHtml($article->contenu) !!}
     </article>
 
     {{-- Partage --}}

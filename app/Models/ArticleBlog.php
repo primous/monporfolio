@@ -72,7 +72,8 @@ class ArticleBlog extends Model
     /** Extrait affiché dans la liste : celui saisi, sinon le début du texte. */
     public function resume(int $limite = 180): string
     {
-        return $this->extrait ?: Str::limit(trim(strip_tags($this->contenu)), $limite);
+        // sanitizeHtml d'abord : le texte d'un éventuel <script> disparaît aussi.
+        return $this->extrait ?: Str::limit(trim(strip_tags(Str::sanitizeHtml((string) $this->contenu))), $limite);
     }
 
     /** Temps de lecture estimé (200 mots par minute, minimum 1). */
