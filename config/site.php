@@ -23,6 +23,9 @@ return [
     // Proxys de confiance : vide (aucun), « * » (derrière Cloudflare / un répartiteur), ou liste d'IP séparées par des virgules.
     'trusted_proxies' => env('TRUSTED_PROXIES', ''),
 
+    // Content-Security-Policy : false = report-only (signale sans bloquer), true = appliquée.
+    'csp_enforce' => (bool) env('CSP_ENFORCE', false),
+
     // Profils publics (données structurées « sameAs » + cohérence NAP). Renseignez les URL dans .env.
     'social' => [
         'facebook' => env('SITE_FACEBOOK'),
