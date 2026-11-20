@@ -20,6 +20,9 @@ return [
 
     'admin_email' => env('SITE_ADMIN_EMAIL', ''),
 
+    // Proxys de confiance : vide (aucun), « * » (derrière Cloudflare / un répartiteur), ou liste d'IP séparées par des virgules.
+    'trusted_proxies' => env('TRUSTED_PROXIES', ''),
+
     // Profils publics (données structurées « sameAs » + cohérence NAP). Renseignez les URL dans .env.
     'social' => [
         'facebook' => env('SITE_FACEBOOK'),

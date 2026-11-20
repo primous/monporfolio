@@ -23,5 +23,12 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isProduction()) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        // Derrière un proxy (Cloudflare, répartiteur Hostinger) : IP réelle du visiteur et HTTPS détectés.
+        // TRUSTED_PROXIES vide = aucun proxy de confiance (valeur par défaut, la plus sûre).
+        $proxies = config('site.trusted_proxies');
+        if (filled($proxies)) {
+            \Illuminate\Http\Middleware\TrustProxies::at($proxies === '*' ? '*' : array_map('trim', explode(',', $proxies)));
+        }
     }
 }

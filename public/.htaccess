@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Sécurité : aucun fichier caché servi (.env, .git, .htaccess…), sauf /.well-known (security.txt, SSL)
+    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+
     # SEO : une seule adresse pour le site en ligne -> https://hounkpatinprimous.com
     # (limité à ce domaine : sans effet en local)
     RewriteCond %{HTTP_HOST} ^(www\.)?hounkpatinprimous\.com$ [NC]

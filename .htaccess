@@ -1,0 +1,19 @@
+# Garde-fou : si la racine du site pointe par erreur sur ce dossier (et non sur public/),
+# rien du projet n'est servi (.env, .git, vendor, storage…) : tout est renvoyé vers public/.
+# La bonne configuration reste : racine du site = public/ (voir SECURITE_SERVEUR.md).
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+    <FilesMatch "\.(env|log|sql|sqlite|lock|json|xml|md|yml|yaml|neon|dist|example)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(?!public/)(.*)$ public/$1 [L]
+</IfModule>
+
+Options -Indexes
