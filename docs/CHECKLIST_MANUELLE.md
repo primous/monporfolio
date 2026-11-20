@@ -30,7 +30,8 @@ Copier `.env.example`, puis régler à la main (bloc « EN PRODUCTION » en bas 
 - [ ] **Registrar du domaine** (si différent d'Hostinger) + **verrou de transfert** activé
 - [ ] **Compte Google** (Search Console, Google Business Profile)
 - [ ] **Boîte mail Hostinger**
-- [ ] **Admin du site** : après validation de la migration 2FA (voir RAPPORT_AUDIT.md)
+- [ ] **Admin du site** : à la 1re connexion en ligne, l'admin impose la configuration. Scanner le QR code avec Google Authenticator, Microsoft Authenticator ou Bitwarden, saisir le code à 6 chiffres, puis **ranger les 8 codes de secours** dans ton gestionnaire de mots de passe (un code = une connexion si tu perds ton téléphone). En local, la 2FA est facultative : « Mon profil » → Double authentification.
+- [ ] Si tu perds téléphone **et** codes de secours : sur le serveur, `php artisan tinker` puis `App\Models\User::where('email', '…')->update(['app_authentication_secret' => null, 'app_authentication_recovery_codes' => null]);`, et reconfigurer à la connexion suivante.
 
 ## 4. E-mail : SPF, DKIM, DMARC
 hPanel → Emails → `hounkpatinprimous.com` → Authentification / DNS. Hostinger propose souvent de les ajouter en un clic. Sinon, enregistrements DNS :
@@ -71,6 +72,5 @@ hPanel → Emails → `hounkpatinprimous.com` → Authentification / DNS. Hostin
 - [ ] Renouveler `public/.well-known/security.txt` avant le **20 novembre 2027** (champ `Expires`).
 
 ## 8. Décisions en attente
-- [ ] Valider la migration 2FA de l'admin.
 - [ ] Retirer ou garder la route `/contact` (ancien formulaire).
 - [ ] Suivi d'erreurs : Sentry (gratuit jusqu'à 5 000 erreurs/mois) ou Flare (payant, fait pour Laravel), ou rien.

@@ -32,6 +32,12 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             // « Mon profil » (menu utilisateur, en haut à droite) : nom et mot de passe.
             ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            // Double authentification : code à 6 chiffres d'une application (Google Authenticator, etc.)
+            // + codes de secours. Obligatoire en production (configurée à la 1re connexion), facultative en local.
+            ->multiFactorAuthentication(
+                [\Filament\Auth\MultiFactor\App\AppAuthentication::make()->recoverable()],
+                isRequired: fn (): bool => app()->isProduction(),
+            )
             ->brandName(config('site.name'))
             ->brandLogo(asset('images/brand/logo.png'))
             ->brandLogoHeight('2.5rem')

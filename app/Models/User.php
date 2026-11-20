@@ -4,14 +4,24 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthentication;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthenticationRecovery;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements FilamentUser
+/**
+ * Compte admin. Double authentification (application d'authentification + codes de secours) :
+ * clé et codes chiffrés en base (casts « encrypted » ajoutés par les traits Filament), jamais sérialisés.
+ */
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery
 {
+    use InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery;
+
     /**
      * Accès au panel Filament : uniquement l'e-mail défini dans config('site.admin_email')
      * (comparaison insensible à la casse). Valeur vide => personne n'a accès.

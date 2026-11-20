@@ -5,8 +5,8 @@ Périmètre : tout le code du dépôt (config, routes, contrôleurs, modèles, m
 Le fichier `.env` réel n'a pas été lu.
 
 **Bilan** : aucune faille critique. 4 risques élevés et 7 moyens, liés surtout à la mise en production.
-Tous sont corrigés dans le code, sauf la double authentification (migration en attente de validation) et ce qui se règle sur le serveur (voir `SECURITE_SERVEUR.md` et `CHECKLIST_MANUELLE.md`).
-Tests : 34 → **49 tests, tous verts**. Larastan niveau 5 : **0 erreur**. `composer audit` et `npm audit` : **0 vulnérabilité**.
+Tous sont corrigés dans le code, sauf ce qui se règle sur le serveur (voir `SECURITE_SERVEUR.md` et `CHECKLIST_MANUELLE.md`).
+Tests : 34 → **53 tests, tous verts**. Larastan niveau 5 : **0 erreur**. `composer audit` et `npm audit` : **0 vulnérabilité**.
 
 ---
 
@@ -21,7 +21,7 @@ Tests : 34 → **49 tests, tous verts**. Larastan niveau 5 : **0 erreur**. `comp
 | M1 | Moyenne | HTML des articles affiché sans nettoyage (`{!! !!}`) | `resources/views/pages/article.blade.php:78` | ✅ `Str::sanitizeHtml` à l'affichage et dans le résumé (commit 3) |
 | M2 | Moyenne | Dossier des téléversements public, sans blocage de PHP ; SVG accepté | `config/filesystems.php`, `ProjetForm.php:35` | ✅ `.htaccess` d'images seules + JPG/PNG/WebP uniquement (commit 3) |
 | M3 | Moyenne | Mot de passe admin : 8 caractères minimum | `EditProfile.php` | ✅ 12 caractères, majuscule, minuscule, chiffre, symbole, divulgués refusés en production (commit 4) |
-| M4 | Moyenne | Pas de double authentification sur l'admin | `AdminPanelProvider.php` | ⏳ migration écrite, **non exécutée** (attend ta validation) |
+| M4 | Moyenne | Pas de double authentification sur l'admin | `AdminPanelProvider.php` | ✅ application d'authentification + codes de secours, obligatoire en production (commit 9) |
 | M5 | Moyenne | Cookie de session non forcé en HTTPS | `config/session.php:172` | ✅ (commit 4) |
 | M6 | Moyenne | Proxys non configurés (IP faussée derrière Cloudflare) | `bootstrap/app.php` | ✅ `TRUSTED_PROXIES` réglable, vide par défaut (commit 1) |
 | M7 | Moyenne | Secrets de l'ancien `.env` collés dans une conversation | — | ⚠️ à changer toi-même (checklist) |
@@ -54,11 +54,10 @@ Tests : 34 → **49 tests, tous verts**. Larastan niveau 5 : **0 erreur**. `comp
 - **UUID** : les seules ressources publiques sont les articles, déjà adressés par leur slug. Les identifiants numériques ne sont visibles que dans l'admin. Aucun changement recommandé.
 
 ## Restant à faire
-1. **2FA de l'admin** : valider la migration `database/migrations/2026_11_20_000001_add_two_factor_to_users_table.php` (2 colonnes ajoutées à `users`, réversible), puis installer `bacon/bacon-qr-code` et activer la 2FA dans Filament.
-2. **Passer la CSP en mode bloquant** (`CSP_ENFORCE=true`) après une semaine en ligne sans alerte dans la console du navigateur.
-3. **Route `/contact`** : la retirer si tu confirmes qu'elle ne sert plus.
-4. Tout ce qui se règle sur le serveur ou dans tes comptes : `SECURITE_SERVEUR.md` et `CHECKLIST_MANUELLE.md`.
-5. **Suivi d'erreurs (Sentry ou Flare)** : non branché, en attente de ton accord.
+1. **Passer la CSP en mode bloquant** (`CSP_ENFORCE=true`) après une semaine en ligne sans alerte dans la console du navigateur.
+2. **Route `/contact`** : la retirer si tu confirmes qu'elle ne sert plus.
+3. Tout ce qui se règle sur le serveur ou dans tes comptes : `SECURITE_SERVEUR.md` et `CHECKLIST_MANUELLE.md`.
+4. **Suivi d'erreurs (Sentry ou Flare)** : non branché, en attente de ton accord.
 
 ## Commits
 | Commit | Étape |
@@ -70,7 +69,8 @@ Tests : 34 → **49 tests, tous verts**. Larastan niveau 5 : **0 erreur**. `comp
 | `dd3a4e7` | 5/8 Validation des formulaires publics en FormRequest |
 | `1b3f1db` | 6/8 Sauvegardes automatiques |
 | `3af336a` | 7/8 Larastan, Dependabot, security.txt, tests d'accès |
-| *(ce commit)* | 8/8 Rapports |
+| `cdb7e25` | 8/8 Rapports |
+| *(suivant)* | 9 Double authentification de l'admin |
 
 ## Commandes au déploiement
 ```bash
