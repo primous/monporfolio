@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Parlez-moi de votre projet | Primous"
-  description="Cinq questions simples pour que je comprenne votre activité et ce que vous voulez construire. Gratuit et sans engagement."
+  title="Demande de devis site internet à Cotonou | Primous"
+  description="Décrivez votre projet de site internet en 5 questions et recevez une proposition adaptée à votre activité. Création de sites à Cotonou, échange gratuit."
 >
 @php
     $phone = config('site.phone');

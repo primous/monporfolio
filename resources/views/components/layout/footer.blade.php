@@ -43,9 +43,13 @@ $link = 'rounded text-white/70 transition duration-200 hover:text-white';
       <div class="flex flex-col gap-3">
         {{-- Logo en version claire (texte blanc) pour le fond noir --}}
         <a href="{{ $url('home') }}" class="inline-flex w-fit rounded-lg">
-          <img src="{{ asset('images/brand/logo-light.png') }}" alt="Hounkpatin Primous — accueil" width="1000" height="305" loading="lazy" class="h-12 w-auto md:h-14">
+          <img src="{{ asset('images/brand/logo-light-400.png') }}" alt="Hounkpatin Primous — accueil" width="400" height="122" loading="lazy" class="h-12 w-auto md:h-14">
         </a>
         <p class="text-sm text-white/70">Un site clair qui explique votre activité une seule fois.</p>
+        <p class="flex items-center gap-2 text-sm text-white/70">
+          <svg viewBox="0 0 24 24" class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+          {{ config('site.legal.adresse') ?: 'Cotonou, Bénin' }}
+        </p>
       </div>
 
       {{-- Bloc 2 --}}

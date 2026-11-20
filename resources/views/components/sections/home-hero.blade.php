@@ -23,7 +23,7 @@ $promises = ['Cinq questions, à votre rythme', 'Une proposition adaptée', 'Pre
       {{-- Texte --}}
       <div class="flex flex-col items-center pb-14 text-center md:items-start md:pb-4 md:text-left lg:pb-16">
         <div class="reveal" style="--i:0">
-          <x-ui.badge class="!border-white/15 !bg-white/10 !text-white !px-4 !py-1.5 !leading-relaxed md:!px-3 md:!py-1">Sites internet pour commerçants, artisans et indépendants</x-ui.badge>
+          <x-ui.badge class="!border-white/15 !bg-white/10 !text-white !px-4 !py-1.5 !leading-relaxed md:!px-3 md:!py-1">Sites internet pour commerçants, artisans et indépendants à Cotonou</x-ui.badge>
         </div>
 
         <h1 class="reveal display mt-9 text-[40px] leading-[1.08] text-white sm:text-[52px] md:mt-6 md:text-[64px] md:leading-none lg:text-[72px]" style="--i:1">
@@ -57,7 +57,7 @@ $promises = ['Cinq questions, à votre rythme', 'Une proposition adaptée', 'Pre
       {{-- Portrait, fondu dans le panneau --}}
       @if ($hasPhoto)
         <div class="reveal-scale relative mx-auto hidden w-full max-w-[460px] md:block lg:mx-0 lg:max-w-none" style="--i:0">
-          <img src="{{ asset($photo) }}" alt="Hounkpatin Primous, créateur de sites internet" width="941" height="941" loading="eager"
+          <img src="{{ asset($photo) }}" alt="Hounkpatin Primous, créateur de sites internet à Cotonou" width="941" height="941" loading="eager" fetchpriority="high" decoding="async"
                class="block h-auto w-full [mask-image:radial-gradient(ellipse_50%_58%_at_50%_42%,#000_50%,transparent_100%)]">
         </div>
       @endif

@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // En ligne, toutes les URL générées (canonical, sitemap, Open Graph) sont en HTTPS.
+        if ($this->app->isProduction()) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

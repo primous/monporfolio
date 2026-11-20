@@ -2,7 +2,22 @@
   En-tête des pages intérieures : même panneau noir que l'accueil, plus compact.
   Props : badge (eyebrow), title (H1), intro. Slot optionnel : actions (boutons).
 --}}
-@props(['badge' => null, 'title', 'intro' => null, 'crumb' => null])
+@props(['badge' => null, 'title', 'intro' => null, 'crumb' => null, 'breadcrumbs' => null])
+@php
+  // Fil d'Ariane structuré (BreadcrumbList). Par défaut : Accueil > page courante.
+  // Une page peut fournir sa propre liste via :breadcrumbs="[[nom, url], …]".
+  $items = $breadcrumbs ?? [['Accueil', route('home')], [$badge ?? $title, url()->current()]];
+  $breadcrumbSchema = [
+      '@context' => 'https://schema.org',
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => array_map(fn ($item, $i) => [
+          '@type' => 'ListItem', 'position' => $i + 1, 'name' => (string) $item[0], 'item' => $item[1],
+      ], $items, array_keys($items)),
+  ];
+@endphp
+@push('schema')
+  <script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
+@endpush
 
 <section class="bg-white md:px-5 md:pt-5">
   <div class="relative isolate mx-auto max-w-[1440px] overflow-hidden rounded-b-[28px] bg-ink-soft text-white md:rounded-[36px]">

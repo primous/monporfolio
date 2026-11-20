@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Mentions légales | Primous"
-  description="Mentions légales du site de Hounkpatin Primous, créateur de sites internet : éditeur, hébergeur, propriété intellectuelle."
+  title="Mentions légales du site internet | Hounkpatin Primous"
+  description="Mentions légales du site de Hounkpatin Primous, créateur de sites internet à Cotonou : éditeur, hébergeur, propriété intellectuelle et droit applicable."
 >
   @php
     $legal = config('site.legal');

@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Politique de confidentialité | Primous"
-  description="Quelles données sont collectées sur ce site, pourquoi, combien de temps elles sont conservées et comment exercer vos droits."
+  title="Politique de confidentialité du site | Hounkpatin Primous"
+  description="Quelles données sont collectées sur ce site, pourquoi, combien de temps elles sont conservées et comment exercer vos droits. Aucun suivi publicitaire."
 >
   @php
     $legal = config('site.legal');

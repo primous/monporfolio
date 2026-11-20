@@ -20,7 +20,7 @@ $homeUrl = $url('home');
 >
   <nav class="mx-auto flex h-[72px] w-full max-w-[1200px] items-center justify-between gap-4 px-6 md:px-12" aria-label="Navigation principale">
     <a href="{{ $homeUrl }}" class="flex shrink-0 items-center rounded-lg">
-      <img src="{{ asset('images/brand/logo.png') }}" alt="Hounkpatin Primous" width="1000" height="305" class="h-10 w-auto md:h-11">
+      <img src="{{ asset('images/brand/logo-400.png') }}" alt="Hounkpatin Primous" width="400" height="122" class="h-10 w-auto md:h-11">
     </a>
 
     {{-- Liens centraux (≥ md) --}}

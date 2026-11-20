@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Services : création de sites internet | Primous"
-  description="Site vitrine, page unique ou outil sur mesure : un site clair qui explique votre activité une seule fois. Proposition adaptée, premier échange gratuit."
+  title="Services web à Cotonou : site, copywriting, Facebook Ads"
+  description="Site vitrine, landing page, copywriting, Facebook Ads et contenus à Cotonou : des outils pensés pour transformer vos visiteurs en clients au Bénin."
 >
   @php
     $formUrl = route(config('site.form_route'));
@@ -9,7 +9,7 @@
   <x-layout.page-hero
     badge="Services"
     title="Un site pensé pour votre activité, pas un modèle."
-    intro="Chaque offre part de la même idée : expliquer clairement ce que vous faites, une seule fois, pour que vos clients vous écrivent prêts à acheter."
+    intro="À Cotonou comme à distance, chaque offre part de la même idée : expliquer clairement ce que vous faites, une seule fois, pour que vos clients vous écrivent prêts à acheter."
   >
     <x-slot:actions>
       <x-ui.button :href="$formUrl">Démarrer mon projet</x-ui.button>

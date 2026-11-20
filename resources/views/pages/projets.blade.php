@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Projets : mes réalisations | Primous"
-  description="Les sites que j’ai conçus et développés : plateformes, pages de présentation et outils en ligne, pensés pour être compris en quelques secondes."
+  title="Réalisations web au Bénin : sites et plateformes | Primous"
+  description="Découvrez les sites conçus et développés par Hounkpatin Primous au Bénin : plateformes, pages de présentation et outils en ligne clairs et efficaces."
 >
   <x-layout.page-hero
     badge="Projets"

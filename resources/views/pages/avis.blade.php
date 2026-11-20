@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Avis clients | Primous"
-  description="Ce qu’en disent les personnes pour qui j’ai construit un site. Avis publiés avec l’accord de chaque client."
+  title="Avis clients : création de site à Cotonou | Primous"
+  description="Les avis des clients de Hounkpatin Primous, créateur de sites internet à Cotonou, publiés avec leur accord. Partagez vous aussi votre expérience ici."
 >
   <x-layout.page-hero
     badge="Avis"
@@ -46,7 +46,7 @@
   <x-layout.section bg="surface" id="laisser-un-avis">
     <div class="mx-auto grid max-w-[1000px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
       <div class="reveal" style="--i:0">
-        <x-ui.section-heading align="left" display badge="Votre avis" title="Vous avez travaillé avec moi&nbsp;?" subtitle="Racontez simplement ce que votre site a changé pour vous, ce qui vous a plu, et ce qui pourrait être amélioré. Votre avis est publié après relecture." />
+        <x-ui.section-heading align="left" display badge="Votre avis" title="Vous avez travaillé avec moi ?" subtitle="Racontez simplement ce que votre site a changé pour vous, ce qui vous a plu, et ce qui pourrait être amélioré. Votre avis est publié après relecture." />
       </div>
 
       <div class="reveal rounded-[24px] border border-line bg-white p-6 shadow-card md:p-8" style="--i:1">

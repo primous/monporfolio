@@ -15,7 +15,24 @@ $faqs = [
 // Typographie française : espace insécable avant « ? » et « : ».
 $nbsp = fn (string $t) => str_replace([' ?', ' :'], ["\u{00A0}?", "\u{00A0}:"], $t);
 $faqs = array_map(fn ($f) => [$nbsp($f[0]), $nbsp($f[1])], $faqs);
+
+// Données structurées FAQPage (mêmes questions et réponses que celles affichées).
+$faqSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => array_map(fn ($f) => [
+        '@type' => 'Question',
+        'name' => $f[0],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+    ], $faqs),
+];
 @endphp
+
+@once
+  @push('schema')
+    <script type="application/ld+json">{!! json_encode($faqSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
+  @endpush
+@endonce
 
 <x-layout.section :bg="$bg" id="questions">
   <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">

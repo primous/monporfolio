@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SeoController;
 use App\Http\Controllers\SuggestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ Route::get('/blog/{slug}', [PageController::class, 'article'])->name('blog.artic
 Route::post('/blog/{slug}/commentaires', [CommentaireController::class, 'store'])
     ->name('blog.commentaire')
     ->middleware('throttle:5,10');
+
+// SEO : plan du site et consignes aux robots (domaine courant).
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 
 // Pages légales (pied de page).
 Route::view('/mentions-legales', 'pages.mentions-legales')->name('mentions-legales');

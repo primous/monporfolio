@@ -20,6 +20,15 @@ return [
 
     'admin_email' => env('SITE_ADMIN_EMAIL', ''),
 
+    // Profils publics (données structurées « sameAs » + cohérence NAP). Renseignez les URL dans .env.
+    'social' => [
+        'facebook' => env('SITE_FACEBOOK'),
+        'instagram' => env('SITE_INSTAGRAM'),
+        'linkedin' => env('SITE_LINKEDIN'),
+        'tiktok' => env('SITE_TIKTOK'),
+        'google' => env('SITE_GOOGLE_BUSINESS'),
+    ],
+
     // Informations légales (pages Mentions légales / Politique de confidentialité).
     // Une ligne vide n'est pas affichée : renseignez-les dans .env dès que vous les avez.
     'legal' => [

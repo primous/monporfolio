@@ -1,7 +1,41 @@
 <x-layouts::app
-  :title="$article->titre.' | Primous'"
+  :title="mb_strlen($article->titre) <= 50 ? $article->titre.' | Primous' : $article->titre"
   :description="$article->resume(155)"
+  :canonical="route('blog.article', $article->slug)"
+  og-type="article"
 >
+  @php
+    // Données structurées de l'article (BlogPosting)
+    $articleSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BlogPosting',
+        'mainEntityOfPage' => route('blog.article', $article->slug),
+        'headline' => $article->titre,
+        'description' => $article->resume(155),
+        'image' => asset('images/brand/og-default.jpg'),
+        'datePublished' => $article->date_publication?->toAtomString(),
+        'dateModified' => $article->updated_at?->toAtomString(),
+        'inLanguage' => 'fr',
+        'wordCount' => str_word_count(strip_tags($article->contenu)),
+        'articleSection' => $article->categorie?->nom,
+        'author' => ['@type' => 'Person', 'name' => 'Hounkpatin Primous', 'url' => route('parcours')],
+        'publisher' => ['@id' => url('/').'/#entreprise'],
+        'interactionStatistic' => [
+            ['@type' => 'InteractionCounter', 'interactionType' => 'https://schema.org/ReadAction', 'userInteractionCount' => (int) $article->vues],
+            ['@type' => 'InteractionCounter', 'interactionType' => 'https://schema.org/CommentAction', 'userInteractionCount' => $commentaires->count()],
+        ],
+    ];
+    $fil = array_values(array_filter([
+        ['Accueil', route('home')],
+        ['Blog', route('blog')],
+        $article->categorie ? [$article->categorie->nom, route('blog', ['categorie' => $article->categorie->slug])] : null,
+        [$article->titre, route('blog.article', $article->slug)],
+    ]));
+  @endphp
+  @push('schema')
+    <script type="application/ld+json">{!! json_encode(array_filter($articleSchema), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
+  @endpush
+
   @php
     $nb = fn (int $n) => number_format($n, 0, ',', "\u{202F}");
     $mot = fn (int $n, string $un, string $plusieurs) => $n > 1 ? $plusieurs : $un;
@@ -15,7 +49,7 @@
     $nbCommentaires = $commentaires->count();
   @endphp
 
-  <x-layout.page-hero :title="$article->titre" :intro="$article->extrait">
+  <x-layout.page-hero :title="$article->titre" :intro="$article->extrait" :breadcrumbs="$fil">
     <x-slot:crumb>
       <a href="{{ route('blog') }}" class="rounded transition duration-200 hover:text-white">Blog</a>
       @if ($article->categorie)

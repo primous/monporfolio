@@ -1,4 +1,4 @@
-import './bootstrap';
+// axios (bootstrap.js) retiré : le site utilise fetch() natif, autant de JavaScript en moins à charger.
 
 // Alpine.js : NE PAS l'importer ni appeler Alpine.start() ici.
 // Livewire 4 embarque et démarre l'unique instance d'Alpine, avec les plugins

@@ -1,6 +1,6 @@
 <x-layouts::app
-  :title="($active ? $active->nom.' : ' : '').'Blog : conseils pour un site clair | Primous'"
-  description="Des articles courts et concrets pour présenter votre activité, rassurer vos clients et recevoir plus de demandes."
+  :title="$active ? $active->nom.' : articles sur le site internet | Primous' : 'Blog : conseils pour un site internet qui vend | Primous'"
+  description="Conseils concrets pour créer un site internet qui vend au Bénin : parcours client, réassurance, formulaires et exemples par activité. Articles courts."
 >
   @php
     // Nombre à la française (espace fine insécable entre les milliers) + accord singulier / pluriel.

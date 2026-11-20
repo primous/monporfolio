@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Parcours : du code à la vente | Primous"
-  description="Développeur de formation, closeur certifié de MarketingLab Institut : Hounkpatin Primous construit des sites qui guident chaque visiteur jusqu’à l’action."
+  title="Développeur web et closeur à Cotonou | Hounkpatin Primous"
+  description="Développeur de formation et closeur certifié MarketingLab, Hounkpatin Primous crée à Cotonou des sites qui guident chaque visiteur jusqu’à l’action."
 >
   @php
     $formUrl = route(config('site.form_route'));

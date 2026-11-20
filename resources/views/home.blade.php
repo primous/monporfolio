@@ -1,6 +1,6 @@
 <x-layouts::app
-  title="Votre site internet, expliqué une seule fois | Primous"
-  description="Un site clair pour votre activité : vos clients comprennent tout, vous arrêtez de répéter. Décrivez votre projet en 5 étapes. Premier échange gratuit."
+  title="Création de site internet à Cotonou | Hounkpatin Primous"
+  description="Création de sites internet à Cotonou pour commerçants, artisans et indépendants : un site clair qui fait écrire vos clients. Premier échange gratuit."
 >
   {{--
     Rythme : panneau noir (hero) / blanc (résultats) / bande noire (projets) / gris (problème)
