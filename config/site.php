@@ -55,4 +55,28 @@ return [
     // Témoignages clients : la section « Avis » et son lien n'apparaissent que si cette liste est remplie.
     // Format : ['quote' => '…', 'name' => 'Prénom Nom', 'role' => 'Activité, ville'].
     'testimonials' => [],
+
+    // Repères du parcours (page Parcours, frise). 'annee' accepte aussi une étiquette.
+    'parcours' => [
+        [
+            'annee' => 'Le point de départ',
+            'titre' => 'Licence en systèmes informatiques et logiciels',
+            'texte' => 'Gaza Formation. Bases de données, architectures web, rigueur des algorithmes : j’apprends à construire la logique d’un site.',
+        ],
+        [
+            'annee' => 'Le déclic',
+            'titre' => 'De beaux sites qui ne vendaient pas',
+            'texte' => 'Je vois des entrepreneurs investir dans des sites parfaits sur le plan visuel, mais sans message clair. Résultat : des visiteurs, et presque aucun client.',
+        ],
+        [
+            'annee' => 'La formation',
+            'titre' => 'Closeur certifié de MarketingLab Institut',
+            'texte' => 'École des commerciaux du Bénin, sous la direction de M. Beni Tossou. Copywriting, publicité Facebook et closing : ce qui transforme une visite en vente.',
+        ],
+        [
+            'annee' => 'Aujourd’hui',
+            'titre' => 'Le code au service de la vente',
+            'texte' => 'Je construis des sites qui guident chaque visiteur jusqu’à l’action : commander, demander un devis, prendre rendez-vous.',
+        ],
+    ],
 ];
