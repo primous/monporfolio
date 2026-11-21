@@ -27,9 +27,11 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            // Adresse discrète en ligne (ADMIN_PATH) ; « admin » en local par défaut.
+            ->path(config('site.admin_path'))
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->login()
+            // Connexion : 5 échecs par 15 min et par IP, échecs journalisés (en plus de la limite Filament).
+            ->login(\App\Filament\Pages\Auth\Login::class)
             // « Mon profil » (menu utilisateur, en haut à droite) : nom et mot de passe.
             ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
             // Double authentification : code à 6 chiffres d'une application (Google Authenticator, etc.)
@@ -76,8 +78,16 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            // Liste d'IP autorisées (ADMIN_ALLOWED_IPS, désactivée si vide) ; « persistent » = aussi sur les requêtes Livewire.
+            ->middleware([
+                \App\Http\Middleware\RestreindreAdminParIp::class,
+            ], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            // Déconnexion après ADMIN_IDLE_MINUTES (15) sans activité.
+            ->authMiddleware([
+                \App\Http\Middleware\DeconnexionInactivite::class,
+            ], isPersistent: true);
     }
 }
