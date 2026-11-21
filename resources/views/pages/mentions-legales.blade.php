@@ -19,7 +19,7 @@
         @if ($legal['ifu']) <br>IFU : {{ $legal['ifu'] }} @endif
         @if ($legal['rccm']) <br>RCCM : {{ $legal['rccm'] }} @endif
         @if ($legal['adresse']) <br>Adresse : {{ $legal['adresse'] }} @endif
-        @if ($email) <br>E-mail : <a href="mailto:{{ $email }}">{{ $email }}</a> @endif
+        @if ($email) <br>E-mail : <x-ui.email-protege /> @endif
         @if ($tel) <br>Téléphone : <a href="tel:{{ preg_replace('/[^0-9+]/', '', $tel) }}">{{ $tel }}</a> @endif
       </p>
 

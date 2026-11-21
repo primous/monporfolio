@@ -16,7 +16,7 @@
         'url' => $base,
         'logo' => asset('images/brand/logo.png'),
         'image' => asset('images/brand/og-default.jpg'),
-        'email' => config('site.email'),
+        // Pas d'e-mail ici : il serait en clair dans le HTML (aspiré par les robots). Le téléphone suffit.
         'telephone' => $telephone,
         'address' => array_filter([
             '@type' => 'PostalAddress',

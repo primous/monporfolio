@@ -82,12 +82,11 @@ $link = 'rounded text-white/70 transition duration-200 hover:text-white';
           </li>
           @if (config('site.email'))
             <li>
-              <a href="mailto:{{ config('site.email') }}" class="{{ $link }} inline-flex items-center gap-2 break-all">
+              <x-ui.email-protege class="{{ $link }} inline-flex items-center gap-2 break-all">
                 <svg viewBox="0 0 24 24" class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
                 </svg>
-                {{ config('site.email') }}
-              </a>
+              </x-ui.email-protege>
             </li>
           @endif
           <li class="text-white/70">

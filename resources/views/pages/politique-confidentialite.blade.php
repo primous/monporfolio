@@ -26,7 +26,7 @@
       <p>
         Hounkpatin Primous, créateur de sites internet
         @if ($legal['adresse']) ({{ $legal['adresse'] }})@endif.
-        @if ($email) Contact&nbsp;: <a href="mailto:{{ $email }}">{{ $email }}</a>. @endif
+        @if ($email) Contact&nbsp;: <x-ui.email-protege />. @endif
       </p>
 
       <h2>Les données collectées, et pourquoi</h2>
@@ -95,7 +95,7 @@
       </ul>
       <p>
         @if ($email)
-          Écrivez simplement à <a href="mailto:{{ $email }}">{{ $email }}</a>&nbsp;: je vous réponds dans les meilleurs délais, et au plus tard sous un mois.
+          Écrivez-moi (<x-ui.email-protege />) ou utilisez le <a href="{{ route('demande-de-projet') }}">formulaire de contact</a>&nbsp;: je vous réponds dans les meilleurs délais, et au plus tard sous un mois.
         @else
           Contactez-moi par téléphone ou par WhatsApp&nbsp;: je vous réponds dans les meilleurs délais, et au plus tard sous un mois.
         @endif
