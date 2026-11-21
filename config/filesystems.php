@@ -40,6 +40,22 @@ return [
             'report' => false,
         ],
 
+        // Copie des sauvegardes HORS du serveur (Backblaze B2, Cloudflare R2, AWS S3 : API compatible S3).
+        // Activer : renseigner BACKUP_S3_* puis BACKUP_DISKS=backups,sauvegarde_externe.
+        // Les archives y sont chiffrées si BACKUP_ARCHIVE_PASSWORD est rempli (obligatoire dans ce cas).
+        'sauvegarde_externe' => [
+            'driver' => 's3',
+            'key' => env('BACKUP_S3_KEY'),
+            'secret' => env('BACKUP_S3_SECRET'),
+            'region' => env('BACKUP_S3_REGION', 'us-east-1'),
+            'bucket' => env('BACKUP_S3_BUCKET'),
+            'endpoint' => env('BACKUP_S3_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'visibility' => 'private',
+            'throw' => false,
+            'report' => true,
+        ],
+
         'site' => [
             'driver' => 'local',
             'root' => public_path('images/uploads'),
