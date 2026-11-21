@@ -20,6 +20,16 @@ return [
 
     'admin_email' => env('SITE_ADMIN_EMAIL', ''),
 
+    // Adresse de l'admin (sans « / »). En ligne : une valeur difficile à deviner (ADMIN_PATH dans .env).
+    // L'ancienne adresse /admin devient alors un leurre (404 + journalisation).
+    'admin_path' => trim((string) env('ADMIN_PATH', 'admin'), '/') ?: 'admin',
+
+    // IP autorisées à ouvrir l'admin (virgules, CIDR accepté). Vide = toutes (par défaut).
+    'admin_allowed_ips' => env('ADMIN_ALLOWED_IPS', ''),
+
+    // Déconnexion de l'admin après ce nombre de minutes sans activité.
+    'admin_idle_minutes' => (int) env('ADMIN_IDLE_MINUTES', 15),
+
     // Proxys de confiance : vide (aucun), « * » (derrière Cloudflare / un répartiteur), ou liste d'IP séparées par des virgules.
     'trusted_proxies' => env('TRUSTED_PROXIES', ''),
 

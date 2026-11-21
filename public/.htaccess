@@ -5,8 +5,9 @@
 
     RewriteEngine On
 
-    # Sécurité : aucun fichier caché servi (.env, .git, .htaccess…), sauf /.well-known (security.txt, SSL)
-    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+    # Sécurité : aucun fichier caché servi (.env, .git…), sauf /.well-known (security.txt, SSL).
+    # Envoyés à Laravel (et non refusés ici) pour que DetecteurDeScans les journalise et bloque l'IP.
+    RewriteRule (^|/)\.(?!well-known(/|$)) index.php [L]
 
     # SEO : une seule adresse pour le site en ligne -> https://hounkpatinprimous.com
     # (limité à ce domaine : sans effet en local)
@@ -50,6 +51,15 @@
     ExpiresByType font/woff2 "access plus 1 year"
     ExpiresByType text/css "access plus 1 year"
     ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+
+# Fichiers servis directement par Apache (images, CSS, JS, security.txt) : mêmes en-têtes que Laravel.
+# « setifempty » : ne remplace pas ceux que Laravel envoie déjà pour les pages.
+<IfModule mod_headers.c>
+    Header always setifempty X-Content-Type-Options "nosniff"
+    Header always setifempty X-Frame-Options "DENY"
+    Header always setifempty Referrer-Policy "strict-origin-when-cross-origin"
+    Header always unset X-Powered-By
 </IfModule>
 
 # Les fichiers du build Vite portent une empreinte dans leur nom : cache long et immuable

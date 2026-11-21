@@ -27,6 +27,11 @@ class SecurityHeaders
         $headers->set('Cross-Origin-Opener-Policy', 'same-origin');
         $headers->remove('X-Powered-By');
 
+        // Jamais indexés : admin, Livewire, envois de formulaires, pages d'erreur.
+        if ($this->nonIndexable($request, $response)) {
+            $headers->set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+        }
+
         // HSTS seulement en HTTPS et en production (en local, il bloquerait http://localhost).
         if ($request->isSecure() && app()->isProduction()) {
             $headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
@@ -38,6 +43,15 @@ class SecurityHeaders
         );
 
         return $response;
+    }
+
+    private function nonIndexable(Request $request, Response $response): bool
+    {
+        $admin = trim((string) config('site.admin_path', 'admin'), '/');
+
+        return $response->getStatusCode() >= 400
+            || ! $request->isMethodSafe()
+            || $request->is($admin, $admin.'/*', 'livewire/*', 'livewire-*', 'filament/*');
     }
 
     /**

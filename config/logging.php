@@ -73,6 +73,15 @@ return [
             'replace_placeholders' => true,
         ],
 
+        // Tentatives d'accès aux chemins sensibles (DetecteurDeScans) : 90 jours de rotation.
+        'securite' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/securite.log'),
+            'level' => 'warning',
+            'days' => 90,
+            'replace_placeholders' => true,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),

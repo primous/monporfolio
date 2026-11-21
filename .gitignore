@@ -28,3 +28,13 @@ Thumbs.db
 
 # Réglages locaux de l’outil de développement
 /.claude
+
+# Sauvegardes, dumps et archives : jamais dans Git
+*.sql
+*.sql.gz
+*.bak
+*.zip
+*.tar.gz
+*.old
+*.swp
+/storage/app/backups

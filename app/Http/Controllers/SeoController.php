@@ -58,8 +58,16 @@ class SeoController extends Controller
         $lignes = [
             'User-agent: *',
             'Allow: /',
-            // Espaces privés ou techniques : rien à indexer
-            'Disallow: /admin',
+            // Chemins techniques. La vraie adresse de l'admin (ADMIN_PATH) n'est JAMAIS listée ici :
+            // robots.txt est public, il servirait de carte aux curieux. Elle est protégée par X-Robots-Tag.
+            // Les lignes /admin/, /.env, /.git/… sont des leurres : ces chemins renvoient 404 et sont journalisés.
+            'Disallow: /admin/',
+            'Disallow: /login/',
+            'Disallow: /.env',
+            'Disallow: /.git/',
+            'Disallow: /backup/',
+            'Disallow: /storage/',
+            'Disallow: /config/',
             'Disallow: /livewire',
             'Disallow: /suggestion',
             'Disallow: /contact',
