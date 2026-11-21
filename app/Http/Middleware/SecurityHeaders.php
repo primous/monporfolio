@@ -28,6 +28,10 @@ class SecurityHeaders
         $headers->set('Cross-Origin-Resource-Policy', 'same-origin');
         $headers->set('X-Permitted-Cross-Domain-Policies', 'none');
         $headers->remove('X-Powered-By');
+        // « X-Powered-By: PHP/8.x » est ajouté par PHP lui-même (expose_php), hors de la réponse Laravel.
+        if (! headers_sent()) {
+            header_remove('X-Powered-By');
+        }
 
         // Jamais indexés : admin, Livewire, envois de formulaires, pages d'erreur.
         if ($this->nonIndexable($request, $response)) {

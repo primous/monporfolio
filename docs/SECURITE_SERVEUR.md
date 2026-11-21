@@ -98,13 +98,15 @@ server {
     ssl_stapling on;
     ssl_stapling_verify on;
 
-    # Fichiers cachés refusés, sauf /.well-known (security.txt, Let's Encrypt)
-    location ~ /\.(?!well-known) { deny all; }
+    # Fichiers cachés (.env, .git…) : envoyés à Laravel, qui renvoie 404, journalise et bloque l'IP
+    # en cas de scan (DetecteurDeScans). /.well-known reste servi (security.txt, Let's Encrypt).
+    location ~ /\.(?!well-known) { rewrite ^ /index.php last; }
 
     # Aucun PHP exécuté dans le dossier des téléversements
     location ^~ /images/uploads/ {
         location ~ \.php$ { deny all; }
         add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options DENY;
         expires 30d;
     }
 
