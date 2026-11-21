@@ -34,7 +34,9 @@ return [
     'trusted_proxies' => env('TRUSTED_PROXIES', ''),
 
     // Content-Security-Policy : false = report-only (signale sans bloquer), true = appliquée.
-    'csp_enforce' => (bool) env('CSP_ENFORCE', false),
+    'csp_enforce' => (bool) env('CSP_ENFORCE', true),
+    // Admin Filament : signalement seulement tant que ses pages n'ont pas toutes été vérifiées en ligne.
+    'csp_enforce_admin' => (bool) env('CSP_ENFORCE_ADMIN', false),
 
     // Profils publics (données structurées « sameAs » + cohérence NAP). Renseignez les URL dans .env.
     'social' => [

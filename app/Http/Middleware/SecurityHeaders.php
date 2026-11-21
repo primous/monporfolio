@@ -21,10 +21,12 @@ class SecurityHeaders
 
         $headers = $response->headers;
         $headers->set('X-Content-Type-Options', 'nosniff');
-        $headers->set('X-Frame-Options', 'SAMEORIGIN');
+        $headers->set('X-Frame-Options', 'DENY');                  // le site ne s'affiche jamais dans un cadre
         $headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
         $headers->set('Cross-Origin-Opener-Policy', 'same-origin');
+        $headers->set('Cross-Origin-Resource-Policy', 'same-origin');
+        $headers->set('X-Permitted-Cross-Domain-Policies', 'none');
         $headers->remove('X-Powered-By');
 
         // Jamais indexés : admin, Livewire, envois de formulaires, pages d'erreur.
@@ -34,11 +36,14 @@ class SecurityHeaders
 
         // HSTS seulement en HTTPS et en production (en local, il bloquerait http://localhost).
         if ($request->isSecure() && app()->isProduction()) {
-            $headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+            $headers->set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');
         }
 
+        // Site public : CSP appliquée (vérifiée page par page). Admin : mode signalement tant que
+        // toutes ses pages n'ont pas été vérifiées en ligne (CSP_ENFORCE_ADMIN=true ensuite).
+        $appliquee = $this->estAdmin($request) ? config('site.csp_enforce_admin') : config('site.csp_enforce');
         $headers->set(
-            config('site.csp_enforce') ? 'Content-Security-Policy' : 'Content-Security-Policy-Report-Only',
+            $appliquee ? 'Content-Security-Policy' : 'Content-Security-Policy-Report-Only',
             $this->contentSecurityPolicy(),
         );
 
@@ -52,6 +57,13 @@ class SecurityHeaders
         return $response->getStatusCode() >= 400
             || ! $request->isMethodSafe()
             || $request->is($admin, $admin.'/*', 'livewire/*', 'livewire-*', 'filament/*');
+    }
+
+    private function estAdmin(Request $request): bool
+    {
+        $admin = trim((string) config('site.admin_path', 'admin'), '/');
+
+        return $request->is($admin, $admin.'/*');
     }
 
     /**
@@ -70,11 +82,19 @@ class SecurityHeaders
             "font-src 'self' data:",
             "connect-src 'self'",
             "media-src 'self'",
+            "manifest-src 'self'",
+            "worker-src 'self' blob:",
+            "frame-src 'none'",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
-            "frame-ancestors 'self'",
+            "frame-ancestors 'none'",
         ];
+
+        // En ligne : toute ressource http:// est chargée en https://.
+        if (app()->isProduction()) {
+            $directives[] = 'upgrade-insecure-requests';
+        }
 
         // En local, Vite (npm run dev) sert les fichiers depuis un autre port.
         if (app()->isLocal() && is_file(public_path('hot'))) {
